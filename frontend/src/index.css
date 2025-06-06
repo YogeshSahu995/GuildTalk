@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@plugin 'tailwind-scrollbar' {
+    nocompatible: true;
+}
+
+
+@layer base {
+    html {
+        @apply transition-colors duration-300
+    }
+    body{
+        @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100
+    }
+}
+
+.loader {
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid;
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
+
+  .bigLoader {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .bigLoader:before {
+      content: '';
+      width: 100%;
+      height: 10px;
+      background: #000000;
+      opacity: 0.25;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      border-radius: 50%;
+      animation: shadow 0.5s linear infinite;
+    }
+    .bigLoader:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: -50%;
+      left: 0;
+      border-radius: 4px;
+      animation: bxSpin 0.5s linear infinite;
+    }
+  @keyframes bxSpin {
+    17% {
+      border-bottom-right-radius: 3px;
+    }
+    25% {
+      transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+      transform: translateY(18px) scale(1, .9) rotate(45deg);
+      border-bottom-right-radius: 40px;
+    }
+    75% {
+      transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+      transform: translateY(0) rotate(90deg);
+    }
+  }
+
+  @keyframes shadow {
+    0%, 100% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.2, 1);
+    }
+  }
