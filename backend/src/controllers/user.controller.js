@@ -89,9 +89,9 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findByIdAndUpdate(userDetails?._id).select("-password -refreshToken")
 
     const options = {
-        httpOnly: true, // it's protect from clientSide javascript from accessed it 
-        secure: false,
-        // sameSite: "none",
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
     }
 
     return res
@@ -118,7 +118,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true, // javascript ma accessible nhi hoga
-        secure: true, // agar ye true kerte hai cookie sirf https connection per send hogi only
+        secure: true, // cookie sirf https connection per send hogi only
     }
 
     return res.status(200)
@@ -135,7 +135,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 
     try {
-        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET) // {user info...}
+        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET) // {userId}
 
         const user = await User.findById(decodedToken?._id).select("-password")
         if (!user) {

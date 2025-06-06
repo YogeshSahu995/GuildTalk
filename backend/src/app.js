@@ -3,7 +3,6 @@ import http from 'http'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { Server } from "socket.io"
-// import { getSocketId } from './utils/SocketId.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -41,6 +40,7 @@ app.use(express.static("public"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+//routes
 import userRouter from "./routes/user.routes.js"
 import messageRouter from "./routes/message.routes.js"
 import followRouter from "./routes/follow.routes.js"
@@ -58,6 +58,7 @@ app.use("/api/v1/comment", commentRouter)
 app.use("/api/v1/like", likeRouter)
 app.use("/api/v1/group", groupRouter)
 
+//error handler middleware 
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(err.statusCode || 500)
