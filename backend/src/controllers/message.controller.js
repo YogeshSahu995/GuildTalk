@@ -233,7 +233,7 @@ const deleteAMessage = asyncHandler(async (req, res) => {
     const isOwner = await Message.findOne({ _id: messageId, senderId: userId })
 
     if (!isOwner) {
-        throw new ApiError(400, "You are not an owner of this comment")
+        throw new ApiError(400, "You are not an owner of this message")
     }
 
     const deletedmessage = await Message.deleteOne({ _id: messageId, senderId: userId })
