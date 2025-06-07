@@ -461,7 +461,7 @@ const checkIsRequestSent = asyncHandler(async (req, res) => {
             $project: {
                 isExistInRequest: {
                     $cond: {
-                        if: { $in: [req.user._id, "$requestList"] },
+                        if: { $in: [req.user?._id, "$requestList"] },
                         then: true,
                         else: false
                     }
@@ -485,7 +485,7 @@ const isJoinedGroup = asyncHandler(async (req, res) => {
             $project: {
                 isExistsInMemberList: {
                     $cond: {
-                        if: { $in: [req.user._id, "$members"] },
+                        if: { $in: [req.user?._id, "$members"] },
                         then: true,
                         else: false
                     }
@@ -515,7 +515,7 @@ const getGroupById = asyncHandler(async (req, res) => {
             $addFields: {
                 CurrentUserAdmin: {
                     $cond: {
-                        if: { $eq: [req.user._id, "$admin"] },
+                        if: { $eq: [req.user?._id, "$admin"] },
                         then: true,
                         else: false
                     }

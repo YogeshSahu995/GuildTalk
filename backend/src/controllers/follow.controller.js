@@ -17,13 +17,13 @@ const toggleFollow = asyncHandler(async (req, res) => {
     }
 
     const alreadyFollow = await Follow.findOne({
-        follower: req.user._id,
+        follower: req.user?._id,
         profile: anotherUserId
     })
 
     if (alreadyFollow) {
         await Follow.deleteOne({
-            follower: req.user._id,
+            follower: req.user?._id,
             profile: anotherUserId
         })
 
@@ -32,7 +32,7 @@ const toggleFollow = asyncHandler(async (req, res) => {
     }
     else{
         await Follow.create({
-            follower: req.user._id,
+            follower: req.user?._id,
             profile: anotherUserId
         })
 

@@ -188,7 +188,7 @@ const deletePost = asyncHandler(async(req, res) => {
     }
 
     
-    const isPostDelete = await Post.findOneAndDelete({_id: postId, owner: req.user._id})
+    const isPostDelete = await Post.findOneAndDelete({_id: postId, owner: req.user?._id})
     
     if(!isPostDelete){
         throw new ApiError(400, "You are not owner of this post")

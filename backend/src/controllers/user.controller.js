@@ -119,6 +119,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true, // javascript ma accessible nhi hoga
         secure: true, // cookie sirf https connection per send hogi only
+        sameSite: "none", 
     }
 
     return res.status(200)
@@ -324,7 +325,7 @@ const updateUsername = asyncHandler(async(req, res) => {
     }
 
     const updatedUser = await User.updateOne(
-        req.user._id,
+        req.user?._id,
         {
             $set: {username}
         },
