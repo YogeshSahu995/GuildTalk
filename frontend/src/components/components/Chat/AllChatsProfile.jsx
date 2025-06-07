@@ -24,7 +24,7 @@ export function AllChatsProfile() {
     }, [])
 
     if (loading) return <BigLoader />
-    if (allGroups.length == 0 && allUsers.length == 0) {
+    if (allGroups.length == 0 && allUsers.length == 0 && !loading) {
         return <EmptyPage
             heading="💬 No Chats Yet"
             firstMessage="Your conversations will appear here once you start chatting."

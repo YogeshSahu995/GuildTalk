@@ -1,22 +1,35 @@
+import { useState } from "react"
 import { deleteAMessage } from "../../../services/message.service"
 import toast from "react-hot-toast"
 
-export function MessageOption({ isOpen, messageId, setIsDeleted, message }) {
+export function MessageOption({ isOpen, setIsOpen, messageId, setIsDeleted, message }) {
+    const [loading, setLoading] = useState(false)
 
     const handleDeleteMessage = (e) => {
         e.stopPropagation()
-        Promise.resolve(deleteAMessage({ messageId }))
-            .then((res) => {
-                if (res?.data?.data) {
-                    setIsDeleted(true)
-                    toast.success("👍 deleted successfully")
-                }
-            })
+        setIsOpen(false)
+        if (!loading) {
+            setLoading(true)
+            Promise.resolve(deleteAMessage({ messageId }))
+                .then((res) => {
+                    if (res?.data?.data) {
+                        setIsDeleted(true)
+                        toast.success("👍 deleted successfully")
+                    }
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
+
+        }
     }
-    const handleCopyMessage = async(e) => {
+    const handleCopyMessage = async (e) => {
         e.stopPropagation()
         await navigator.clipboard.writeText(message)
-        .then(() => toast.success("Copied"))
+            .then(() => {
+                setIsOpen(false)
+                toast.success("Copied")
+            })
     }
 
     const options = [

@@ -13,29 +13,31 @@ export function PostInfo({ likeCount, commentCount, isLiked, postId, date }) {
         setComments(commentCount);
     }, [isLiked, likeCount, commentCount]);
 
-    const handleLike = async() => {
-        setLoading(true)
-        Promise.resolve(toggleLike({ postId }))
-        .then(res => {
-            if (res?.data?.data) {
-                setLiked(true)
-                setLikes(prev => ++prev)
-            }
-            else{
-                setLiked(false)
-                setLikes(prev => --prev)
-            }
-        })
-        .finally(() => {
-            setLoading(false)
-        })
+    const handleLike = async () => {
+        if (!loading) {
+            setLoading(true)
+            Promise.resolve(toggleLike({ postId }))
+                .then(res => {
+                    if (res?.data?.data) {
+                        setLiked(true)
+                        setLikes(prev => ++prev)
+                    }
+                    else {
+                        setLiked(false)
+                        setLikes(prev => --prev)
+                    }
+                })
+                .finally(() => {
+                    setLoading(false)
+                })
+        }
     }
     return (
         <>
             <div className="flex gap-4 text-2xl">
                 <div className="flex flex-col">
                     <i
-                        className={`${liked ? `ri-heart-fill text-[#aa63fc] dark:text-[#ff8201]` : `ri-heart-line`} ${loading?"cursor-wait":"cursor-pointer"} duration-200`}
+                        className={`${liked ? `ri-heart-fill text-[#aa63fc] dark:text-[#ff8201]` : `ri-heart-line`} ${loading ? "cursor-wait" : "cursor-pointer"}  duration-200`}
                         onClick={handleLike}
                     ></i>
                     <p className="text-sm sm:text-base md:text-lg">{likes} likes</p>

@@ -14,27 +14,26 @@ export function LogoutBtn({
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const handleLogout = async() => {
+    const handleLogout = () => {
         setLoading(true)
-        try {
-            const response = await logoutUser()
-            if(response?.data){
-                dispatch(logout())
-                navigate('/login')
-                socket.disconnect() // connection disconnect here
-                toast("👋 Successfully logout")
-            }
-        } catch (error) {}
-        finally{
-            setLoading(false)
-        }
+        Promise.resolve(logoutUser())
+            .then((res) => {
+                if (res?.data?.data) {
+                    dispatch(logout())
+                    navigate('/login')
+                    socket.disconnect() // connection disconnect here
+                    toast("👋 Successfully logout")
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
     return (
-        <Button 
+        <Button
             className={`${className} shadow-2xl`}
             textSize=""
-            
-            onClick = {handleLogout}
+            onClick={handleLogout}
             loading={loading}
             value="Logout"
             icon={<i className="ri-logout-box-r-line ml-1"></i>}

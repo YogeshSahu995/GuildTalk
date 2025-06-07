@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button, CoverImage } from "../../ui";
+import { Avatar, CoverImage } from "../../ui";
 import { AddRequestBtn } from "./GroupButtons/AddRequestBtn";
 import { useEffect, useState } from "react";
 import { checkIsJoinedTheGroup } from "../../../services/group.service";

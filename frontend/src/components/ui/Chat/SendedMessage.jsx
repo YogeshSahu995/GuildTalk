@@ -10,6 +10,7 @@ export function SendedMessage({ message, time, id }) {
         <div className={`${isDeleted ? "hidden" : "relative"}`}>
             <MessageOption
                 isOpen={isOpen}
+                setIsOpen={setIsOpen}
                 messageId={id}
                 setIsDeleted={setIsDeleted}
                 message = {message}
