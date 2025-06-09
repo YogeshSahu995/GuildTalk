@@ -17,7 +17,6 @@ export function ChangeImageForm({
     const [loading, setLoading] = useState(false)
     const [temp, setTemp] = useState(null)
     const { register, handleSubmit } = useForm()
-    console.log(type)
 
     //change cover-image
     const handelChangeImage = useCallback((data) => {

@@ -169,7 +169,7 @@ const updateGroupAvatar = asyncHandler(async (req, res) => {
     }
 
     return res.status(200)
-        .json(new ApiResponse(200, updatedGuildAvatar, "Successfully update the avatar"))
+        .json(new ApiResponse(200, updatedGuildAvatar?.groupAvatar, "Successfully update the avatar"))
 })
 
 const updateGroupCoverImage = asyncHandler(async (req, res) => {
@@ -211,7 +211,7 @@ const updateGroupCoverImage = asyncHandler(async (req, res) => {
     }
 
     return res.status(200)
-        .json(new ApiResponse(200, updatedGuildCoverImage, "Successfully update the coverImage"))
+        .json(new ApiResponse(200, updatedGuildCoverImage?.groupCoverImage, "Successfully update the coverImage"))
 })
 
 const addMemberInGroup = asyncHandler(async (req, res) => {
