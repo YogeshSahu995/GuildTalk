@@ -14,7 +14,8 @@ export function ProfilePost({ profileId, isCurrentUser }) {
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getAllPostOfUser({ userId: profileId, page, limit }))
+        const controller = new AbortController()
+        Promise.resolve(getAllPostOfUser({ userId: profileId, page, limit, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data) {
                     setAllPost(prev => [...prev, ...res.data.data.docs])
@@ -24,6 +25,8 @@ export function ProfilePost({ profileId, isCurrentUser }) {
             .finally(() => {
                 setLoading(false)
             })
+            
+        return () => controller.abort()
     }, [profileId, page, limit])
 
     useEffect(() => {

@@ -8,14 +8,17 @@ export function PostComment({ postId, newComments = [] }) {
 
     useEffect(() => {
         setLoading(true)
+        const controller = new AbortController()
         Promise
-            .resolve(getAPostComment({ postId }))
+            .resolve(getAPostComment({ postId, signal: controller.signal }))
             .then(res => {
                 if (res?.data?.data) {
                     setAllComments(res.data.data)
                 }
             })
             .finally(setLoading(false))
+
+        return () => controller.abort()
     }, [postId])
 
     return (

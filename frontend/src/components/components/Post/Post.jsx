@@ -11,12 +11,15 @@ export function Post({ postId }) {
 
     useEffect(() => {
         setLoading(true)
+        const controller = new AbortController()
         Promise
-            .resolve(getPostDetails({ postId }))
+            .resolve(getPostDetails({ postId, signal: controller.signal }))
             .then(res => {
                 setPostDetails(res?.data?.data)
             })
             .finally(setLoading(false))
+
+        return () => controller.abort()
     }, [postId])
 
     if (loading) return <BigLoader />
@@ -51,7 +54,6 @@ export function Post({ postId }) {
                             setNewComment={setNewComment}
                         />
                     </section>
-                    
                     <section className="relative h-[30dvh] md:h-[60dvh] px-2 py-4 border-b border-[#26262660] dark:border-[#c5c5c564] bg-[#f1e8ff] dark:bg-[#3a6d8c39] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-[#aa63fc] dark:scrollbar-thumb-[#ff8201]  scrollbar-track-[#25252529] dark:scrollbar-track-[#e0e0e029] scroll-smooth">
                         {/* usercaption */}
                         <div className="flex flex-row items-center gap-2 pb-2 border-b shadow-xl">
@@ -73,7 +75,6 @@ export function Post({ postId }) {
                             newComments={newComment} 
                         />
                     </section>
-                    
                 </div>
             </section>
         </div>

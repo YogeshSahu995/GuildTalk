@@ -42,10 +42,11 @@ const changeGroupCoverImage = async({groupId, data}) => {
     })
 }
 
-const getAllGroupsOfUser = async() => {
+const getAllGroupsOfUser = async({signal}) => {
     return await apiCallHandler({
         endpoint: `/group/get/all/guild`,
-        method: "get"
+        method: "get",
+        signal,
     })
 }
 
@@ -71,10 +72,11 @@ const searchGroupsByName = async({page, limit, query, signal}) => {
     })
 }
 
-const getGroupById = async({groupId}) => {
+const getGroupById = async({groupId, signal}) => {
     return await apiCallHandler({
         endpoint: `/group/get/group/details/${groupId}`,
         method: "get",
+        signal
     })
 }
 
@@ -85,10 +87,11 @@ const checkRequestIsSendedOrNot = async({groupId}) => {
     })
 }
 
-const checkIsJoinedTheGroup = async({groupId}) => {
+const checkIsJoinedTheGroup = async({groupId, signal}) => {
     return await apiCallHandler({
         endpoint: `/group/get/join/details/${groupId}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 
@@ -106,10 +109,11 @@ const removeTheMemberOfGroup = async({memberId, groupId}) => {
     })
 }
 
-const getAllRequestsOfGroup = async({groupId}) => {
+const getAllRequestsOfGroup = async({groupId,signal}) => {
     return await apiCallHandler({
         endpoint: `/group/get/all/requests/${groupId}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 

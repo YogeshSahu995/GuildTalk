@@ -11,7 +11,8 @@ export function AllChatsProfile() {
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getAllUserAndGroup())
+        const controller = new AbortController()
+        Promise.resolve(getAllUserAndGroup({signal: controller.signal}))
             .then(res => {
                 if (res?.data?.data?.userProfiles) {
                     setAllUsers(res.data.data.userProfiles)
@@ -21,6 +22,7 @@ export function AllChatsProfile() {
                 }
             })
             .finally(setLoading(false))
+        return () => controller.abort()
     }, [])
 
     if (loading) return <BigLoader />

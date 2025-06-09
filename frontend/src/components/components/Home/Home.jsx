@@ -29,7 +29,7 @@ export function Home() {
 
     const searchProfile = useCallback(({ signal, reset = false }) => {
         setLoading(true)
-
+        
         //clear all profiles
         if (reset) setSearchedProfile([])
 

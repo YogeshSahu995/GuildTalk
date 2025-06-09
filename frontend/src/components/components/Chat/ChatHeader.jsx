@@ -16,8 +16,9 @@ export function ChatHeader({
 
     useEffect(() => {
         setLoading(true)
+        const controller = new AbortController()
         if (type == "person") {
-            Promise.resolve(getUserDetailsById({ anotherUserId }))
+            Promise.resolve(getUserDetailsById({ anotherUserId, signal: controller.signal }))
                 .then((res) => {
                     if (res?.data?.data) {
                         setUser(res.data.data)
@@ -26,7 +27,7 @@ export function ChatHeader({
                 .finally(() => setLoading(false))
         }
         else {
-            Promise.resolve(getGroupById({ groupId }))
+            Promise.resolve(getGroupById({ groupId, signal: controller.signal }))
                 .then((res) => {
                     if (res?.data?.data) {
                         setGroup(res.data.data)
@@ -34,6 +35,8 @@ export function ChatHeader({
                 })
                 .finally(() => setLoading(false))
         }
+
+        return () => controller.abort()
     }, [anotherUserId, groupId])
 
     if (loading) return

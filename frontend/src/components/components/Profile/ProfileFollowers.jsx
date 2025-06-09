@@ -12,7 +12,7 @@ export function ProfileFollowers() {
     const [hasNextPage, setHasNextPage] = useState(false)
     const [allFollowers, setAllFollowers] = useState([])
     const [loading, setLoading] = useState(false)
-    const {scrollContainer} = useOutletContext()
+    const { scrollContainer } = useOutletContext()
 
     useEffect(() => {
         const scrollFn = paginationHandler({ scrollContainer, hasNextPage, setPage })
@@ -21,19 +21,20 @@ export function ProfileFollowers() {
     }, [scrollContainer, hasNextPage, setPage])
 
     useEffect(() => {
-        (async () => {
-            setLoading(true)
-            await Promise.resolve(getAllFollowers({ username, page, limit }))
-                .then((res) => {
-                    if (res?.data?.data?.docs) {
-                        setAllFollowers(prev => [...prev, ...res.data.data.docs])
-                        setHasNextPage(res.data.data?.hasNextPage)
-                    }
-                })
-                .finally(() => {
-                    setLoading(false)
-                })
-        })()
+        setLoading(true)
+        const controller = new AbortController()
+        Promise.resolve(getAllFollowers({ username, page, limit, signal: controller.signal }))
+            .then((res) => {
+                if (res?.data?.data?.docs) {
+                    setAllFollowers(prev => [...prev, ...res.data.data.docs])
+                    setHasNextPage(res.data.data?.hasNextPage)
+                }
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+
+        return () => controller.abort()
     }, [username, page, limit])
 
     return (

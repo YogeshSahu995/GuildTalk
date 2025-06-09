@@ -11,12 +11,14 @@ export function SingleGroup({ group }) {
     const [isJoind, setIsJoined] = useState(false)
 
     useEffect(() => {
-        Promise.resolve(checkIsJoinedTheGroup({ groupId: group?._id }))
+        const controller = new AbortController()
+        Promise.resolve(checkIsJoinedTheGroup({ groupId: group?._id, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data) {
                     setIsJoined(res.data.data)
                 }
             })
+        return () => controller.abort()
     }, [group?._id])
 
     return (

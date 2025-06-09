@@ -10,7 +10,7 @@ export function PostCommentInput({ postId, setNewComment }) {
     const owner = useSelector(state => state?.user?.userData)
 
     const handleComment = async () => {
-        if (comment.trim()) {
+        if (comment.trim() && !loading) {
             setLoading(true)
             Promise.resolve(addAComment({ data: { comment }, postId }))
                 .then((res) => {

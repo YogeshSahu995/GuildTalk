@@ -10,7 +10,8 @@ export function AllMembers() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getAllMembersOfGroup({ groupId }))
+        const controller = new AbortController()
+        Promise.resolve(getAllMembersOfGroup({ groupId, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data?.members) {
                     setAllMembers(res.data.data.members)
@@ -19,6 +20,7 @@ export function AllMembers() {
             .finally(() => {
                 setLoading(false)
             })
+        return () => controller.abort()
     }, [groupId])
 
     if (loading) return <BigLoader />

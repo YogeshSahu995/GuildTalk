@@ -11,13 +11,15 @@ export function AllRequests() {
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getAllRequestsOfGroup({ groupId }))
+        const controller = new AbortController()
+        Promise.resolve(getAllRequestsOfGroup({ groupId, signal: controller?.signal }))
             .then((res) => {
                 if (res?.data?.data?.requests) {
                     setAllRequest(res.data.data.requests)
                 }
             })
             .finally(() => setLoading(false))
+        return () => controller.abort()
     }, [groupId])
 
     if (loading) return <BigLoader />

@@ -10,17 +10,19 @@ const uploadAPost = async({formData}) => {
     })
 }
 
-const getAllPostOfUser = async({userId, page, limit}) => {
+const getAllPostOfUser = async({userId, page, limit, signal}) => {
     return await apiCallHandler({
         endpoint: `/post/get/all/${userId}?page=${page}&limit=${limit}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 
-const getPostDetails = async({postId}) => {
+const getPostDetails = async({postId, signal}) => {
     return await apiCallHandler({
         endpoint: `/post/get/post/details/${postId}`,
-        method: "get"
+        method: "get",
+        signal: signal,
     })
 }
 

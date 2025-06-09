@@ -39,17 +39,19 @@ const getAllMessageOfGroup = async({groupId, page, limit}) => {
     })
 }
 
-const getAllUserAndGroup = async() => {
+const getAllUserAndGroup = async({signal}) => {
     return await apiCallHandler({
         endpoint: `/message/get/profiles`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 
-const getLatestmessage = async({groupId}) => {
+const getLatestmessage = async({groupId, signal}) => {
     return await apiCallHandler({
         endpoint: `/message/get/group/latest/message/${groupId}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 

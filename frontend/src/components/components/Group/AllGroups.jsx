@@ -9,13 +9,16 @@ export function AllGroup() {
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getAllGroupsOfUser())
+        const controller = new AbortController()
+        Promise.resolve(getAllGroupsOfUser({signal: controller.signal}))
             .then((res) => {
                 if (res?.data?.data?.groups) {
                     setAllGroup(res.data.data.groups)
                 }
             })
             .finally(() => setLoading(false))
+            
+        return () => controller.abort()
     }, [])
 
     if (loading) return <BigLoader />

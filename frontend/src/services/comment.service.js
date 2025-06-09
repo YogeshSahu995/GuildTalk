@@ -17,10 +17,11 @@ const deleteAComment = async({commentId}) => {
     })
 }
 
-const getAPostComment = async({postId}) => {
+const getAPostComment = async({postId, signal}) => {
     return await apiCallHandler({
         endpoint: `/comment/get/${postId}`,
-        method: "get"
+        method: "get",
+        signal: signal
     })
 }
 export {getAPostComment, deleteAComment, addAComment}

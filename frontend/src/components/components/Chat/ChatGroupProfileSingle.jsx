@@ -10,12 +10,14 @@ export function ChatGroupProfileSingle({ createdAt, group }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        Promise.resolve(getLatestmessage({ groupId: group?._id }))
+        const controller = new AbortController()
+        Promise.resolve(getLatestmessage({ groupId: group?._id, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data) {
                     setLatestMessage(res.data.data)
                 }
             })
+        return () => controller.abort()
     }, [group])
 
     return (

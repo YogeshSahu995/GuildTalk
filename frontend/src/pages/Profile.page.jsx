@@ -14,7 +14,8 @@ export function Profile() {
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getProfileByUsername({ username }))
+        const controller = new AbortController()
+        Promise.resolve(getProfileByUsername({ username, signal: controller.signal }))
             .then((response) => {
                 if (response?.data?.data) {
                     setProfileData(response?.data?.data)
@@ -27,6 +28,7 @@ export function Profile() {
                 setLoading(false)
             })
 
+        return () => controller.abort()
     }, [username])
 
     if (loading || !profileData) return (<BigLoader />)

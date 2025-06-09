@@ -34,9 +34,10 @@ export function OpenedGroup() {
 
     useEffect(() => {
         setLoading(true)
+        const controller = new AbortController()
         Promise.all([
-            getGroupById({ groupId }),
-            checkIsJoinedTheGroup({ groupId })
+            getGroupById({ groupId, signal: controller.signal }),
+            checkIsJoinedTheGroup({ groupId, signal: controller.signal })
         ])
             .then(([res, res2]) => {
                 if (res?.data?.data) {
@@ -51,6 +52,7 @@ export function OpenedGroup() {
             .finally(() => {
                 setLoading(false)
             })
+        return () => controller.abort()
     }, [groupId])
 
     useEffect(() => {

@@ -16,7 +16,8 @@ export function PostInfo({ likeCount, commentCount, isLiked, postId, date }) {
     const handleLike = async () => {
         if (!loading) {
             setLoading(true)
-            Promise.resolve(toggleLike({ postId }))
+            const controller = new AbortController()
+            Promise.resolve(toggleLike({ postId, signal: controller.signal }))
                 .then(res => {
                     if (res?.data?.data) {
                         setLiked(true)
@@ -30,6 +31,7 @@ export function PostInfo({ likeCount, commentCount, isLiked, postId, date }) {
                 .finally(() => {
                     setLoading(false)
                 })
+            return () => controller.abort()
         }
     }
     return (

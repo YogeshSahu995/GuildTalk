@@ -1,23 +1,26 @@
 import { apiCallHandler } from "../utils/apiCallHandler"
 
-const toggleLike = async({postId}) => {
+const toggleLike = async({postId, signal}) => {
     return await apiCallHandler({
         endpoint: `/like/toggle/${postId}`,
-        method: "post"
+        method: "post",
+        signal
     })
 }
 
-const getAllLikedPosts = async({limit, page}) => {
+const getAllLikedPosts = async({limit, page, signal}) => {
     return await apiCallHandler({
         endpoint: `/like/get/liked-post?page=${page}&limit=${limit}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 
-const getPostLikes = async({postId}) => {
+const getPostLikes = async({postId, signal}) => {
     return await apiCallHandler({
         endpoint: `/like/get/likes/${postId}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 

@@ -24,7 +24,8 @@ export function ProfileFollowingList() {
     //fetch all profile
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(getAllFollowingProfile({ username, page, limit }))
+        const controller = new AbortController()
+        Promise.resolve(getAllFollowingProfile({ username, page, limit, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data?.docs) {
                     setAllFollowing(prev => [...prev, ...res.data.data?.docs])
@@ -34,6 +35,7 @@ export function ProfileFollowingList() {
             .finally(() => {
                 setLoading(false)
             })
+        return () => controller.abort()
     }, [username, page, limit])
 
 

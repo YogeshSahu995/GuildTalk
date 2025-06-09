@@ -33,7 +33,8 @@ export function GroupSingleProfile({
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(isFollowed({ profileId: profile?._id }))
+        const controller = new AbortController()
+        Promise.resolve(isFollowed({ profileId: profile?._id, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data) {
                     setIsFollowing(res.data.data)
@@ -42,6 +43,7 @@ export function GroupSingleProfile({
             .finally(() => {
                 setLoading(false)
             })
+        return () => controller.abort()
     }, [profile?._id, type])
 
     return (

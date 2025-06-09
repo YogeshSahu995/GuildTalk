@@ -13,17 +13,18 @@ export function SingleProfile({ profile }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(currentUserName !== profile?.username){
+        if (currentUserName !== profile?.username) {
             setIsCurrentUser(false)
         }
-        else{
+        else {
             setIsCurrentUser(true)
         }
     }, [currentUserName, profile?.username])
 
     useEffect(() => {
         setLoading(true)
-        Promise.resolve(isFollowed({ profileId: profile?._id }))
+        const controller = new AbortController()
+        Promise.resolve(isFollowed({ profileId: profile?._id, signal: controller.signal }))
             .then((res) => {
                 if (res?.data?.data) {
                     setIsFollowing(res.data.data)
@@ -32,6 +33,7 @@ export function SingleProfile({ profile }) {
             .finally(() => {
                 setLoading(false)
             })
+        return () => controller.abort()
     }, [profile?._id])
 
     return (

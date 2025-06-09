@@ -7,10 +7,11 @@ const toggleFollow = async({anotherUserId}) => {
     })
 }
 
-const getAllFollowers = async({username, page, limit}) => {
+const getAllFollowers = async({username, page, limit, signal}) => {
     return await apiCallHandler({
         endpoint: `/follow/get/followers/${username}?page=${page}&limit=${limit}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 
@@ -21,10 +22,11 @@ const getAllFollowingProfile = async({username, page, limit}) => {
     })
 }
 
-const isFollowed = async({profileId}) => {
+const isFollowed = async({profileId, signal}) => {
     return await apiCallHandler({
         endpoint: `/follow/is/followed/${profileId}`,
-        method: "get"
+        method: "get",
+        signal
     })
 }
 

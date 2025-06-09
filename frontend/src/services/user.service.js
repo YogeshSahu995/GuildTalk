@@ -34,10 +34,11 @@ const getCurrentUser = async() => {
     })
 }
 
-const getProfileByUsername = async({username}) => {
+const getProfileByUsername = async({username, signal}) => {
     return await apiCallHandler({
         endpoint: `/user/get/profile/${username}`,
         method: "get",
+        signal
     })
 }
 
@@ -67,10 +68,11 @@ const searchPorfileByUsername = async({query, page, limit, signal}) => {
     })
 }
 
-const getUserDetailsById = async({anotherUserId}) => {
+const getUserDetailsById = async({anotherUserId, signal}) => {
     return await apiCallHandler({
         endpoint: `/user/get/details/${anotherUserId}`,
-        method: "get"
+        method: "get",
+        signal
     }) 
 }
 
