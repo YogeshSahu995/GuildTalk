@@ -1,6 +1,6 @@
 export function CoverImage({
     src = "",
-    alt = "",
+    alt = "CoverImage",
     className = "",
     height = "h-[150px]",
     width = "w-full"

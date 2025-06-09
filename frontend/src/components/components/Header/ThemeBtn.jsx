@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export function ThemeBtn({setIsLightOrDark = () => {}}) {
-    const [theme, setTheme] = useState("light")
+    const [theme, setTheme] = useState("dark")
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme')

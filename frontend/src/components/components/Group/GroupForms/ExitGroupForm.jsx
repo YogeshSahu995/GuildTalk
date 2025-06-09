@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { removeTheMemberOfGroup } from "../../../../services/group.service";
-import { Button, FormStyle } from "../../../ui";
+import { Button, FormStyle, PopupFormStyle } from "../../../ui";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,10 @@ export function ExitGroupForm({ isExistFormHide, setIsExistFormHide, groupId }) 
     }
 
     return (
-        <div className={`${isExistFormHide ? "hidden" : "absolute"} top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[90%] sm:w-[70%] lg:w-1/2 bg-[#282828e8] dark:bg-[#000000d6] bg-blend-difference py-3 px-4 rounded z-50`}>
+        <PopupFormStyle 
+            isHideState={isExistFormHide}
+            setIsHideState={setIsExistFormHide}
+        >
             <div className="flex flex-col gap-2">
                 <h1 className="text-2xl font-bold text-[#aa63fc] dark:text-[#ff8201]">Are you sure?</h1>
                 <p className="font-semibold text-gray-300">Are you sure to Exit from the group.</p>
@@ -31,10 +34,6 @@ export function ExitGroupForm({ isExistFormHide, setIsExistFormHide, groupId }) 
                     />
                 </div>
             </div>
-            <i
-                className="ri-close-large-line absolute top-4 right-4 cursor-pointer"
-                onClick={() => setIsExistFormHide(true)}
-            ></i>
-        </div>
+        </PopupFormStyle>
     )
 }

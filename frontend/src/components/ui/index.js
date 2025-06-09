@@ -2,7 +2,7 @@ import { Post, PostCommentInput, PostInfo } from "./Post"
 import { Loader, BigLoader } from "./Loader"
 import { TextArea, Input } from "./Input"
 import { Avatar, CoverImage } from "./Image"
-import { FormStyle, Error } from "./Form"
+import { FormStyle, Error, PopupFormStyle } from "./Form"
 import { Comment } from "./Comment"
 import { SendedMessage, ReceivedMessage } from "./Chat"
 import { Button } from "./Button"
@@ -16,6 +16,7 @@ export {
     ReceivedMessage, 
     SendedMessage,
     FormStyle,
+    PopupFormStyle,
     Error,
     Loader,
     BigLoader,
