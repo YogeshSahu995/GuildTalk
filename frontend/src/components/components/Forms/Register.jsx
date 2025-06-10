@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { HandelPreview } from "../../../utils/previewHandler";
 import toast from "react-hot-toast";
+import { socket } from "../../../socket";
 
 export function Register({ prevData }) {
 
@@ -42,11 +43,11 @@ export function Register({ prevData }) {
                         Promise.resolve(loginUser({ username, password }))
                             .then((res) => {
                                 if (res?.data?.data?.user) {
-                                    socket.connect() //create Connection
-                                    socket.emit("user-online", { userId: response?.data?.data?.user?._id }) //set socket.id and isOnline: true
-                                    dispatch(login(response.data.data.user))
-                                    toast.success("Successfully registered 👍")
+                                    dispatch(login(res.data.data.user))
                                     navigate('/')
+                                    toast.success("Successfully registered 👍")
+                                    socket.connect() //create Connection
+                                    socket.emit("user-online", { userId: res?.data?.data?.user?._id }) //set socket.id and isOnline: true
                                 }
                             })
                     }

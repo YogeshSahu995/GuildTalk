@@ -27,7 +27,7 @@ export function Layout() {
             </section>
             <section className="h-[90dvh] flex flex-col-reverse md:flex-row flex-1/2">
                 {isLogin && (
-                    <aside className="h-fit md:h-full w-full md:w-fit md:pr-4 lg:w-[18%] border-t md:border-r border-[#00000091] dark:border-[#ffffff60]">
+                    <aside className="h-fit md:h-full w-full md:w-fit md:pr-4 lg:w-[18%] border-t md:border-t-0 md:border-r border-[#00000091] dark:border-[#ffffff60]">
                         <SideBar />
                     </aside>
                 )}

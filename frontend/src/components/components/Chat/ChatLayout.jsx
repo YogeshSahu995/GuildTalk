@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ReceivedMessage, SendedMessage } from "../../ui/Chat/index.js"
 import { getAllMessage, getAllMessageOfGroup } from "../../../services/message.service.js"
 import { Loader } from "../../ui"
@@ -58,7 +58,7 @@ export function ChatLayout({
     //get previous messages
     useEffect(() => {
         setChatLayData(prev => ({ ...prev, loading: true }))
-
+        
         if (type === "person") {
             Promise.resolve(getAllMessage({
                 limit: chatLayData.limit,
