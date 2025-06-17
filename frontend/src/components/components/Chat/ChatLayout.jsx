@@ -58,7 +58,7 @@ export function ChatLayout({
     //get previous messages
     useEffect(() => {
         setChatLayData(prev => ({ ...prev, loading: true }))
-        
+
         if (type === "person") {
             Promise.resolve(getAllMessage({
                 limit: chatLayData.limit,
@@ -141,13 +141,49 @@ export function ChatLayout({
                     if (currentDate !== lastDate) {
                         lastDate = currentDate
                         return (
-                            <div
-                                className="h-fit w-fit text-xs sm:text-sm  mx-auto p-1 m-2 rounded bg-[#000000aa] text-[#fff]"
-                                key={currentDate}
-                            >
-                                {currentDate}
-                            </div>
-                        )
+                            <div key={currentDate}>
+                                <div
+                                    className="h-fit w-fit text-xs sm:text-sm  mx-auto p-1 m-2 rounded bg-[#000000aa] text-[#fff]"
+                                >
+                                    {currentDate}
+                                </div>
+                                {
+                                    type === "person" ?
+                                        (
+                                            messageDetails?.senderId === anotherUserId ?
+                                                (<div key={messageDetails?._id}>
+                                                    <ReceivedMessage
+                                                        id={messageDetails?._id}
+                                                        message={messageDetails?.message}
+                                                        time={new Date(messageDetails?.createdAt).toLocaleTimeString()}
+                                                    />
+                                                </div>) :
+                                                (<div key={messageDetails?._id}>
+                                                    <SendedMessage
+                                                        id={messageDetails?._id}
+                                                        message={messageDetails?.message}
+                                                        time={new Date(messageDetails?.createdAt).toLocaleTimeString()}
+                                                    />
+                                                </div>)
+                                        ) :
+                                        (messageDetails?.senderId === currentUserData?._id ?
+                                            (<div key={messageDetails?._id}>
+                                                <SendedMessage
+                                                    id={messageDetails?._id}
+                                                    message={messageDetails?.message}
+                                                    time={new Date(messageDetails?.createdAt).toLocaleTimeString()}
+                                                />
+                                            </div>)
+                                            :
+                                            (<div key={messageDetails?._id}>
+                                                <ReceivedMessage
+                                                    senderUsername={messageDetails?.senderDetails?.[0]?.username}
+                                                    message={messageDetails?.message}
+                                                    time={new Date(messageDetails?.createdAt).toLocaleTimeString()}
+                                                />
+                                            </div>))
+                                }
+                            </div>)
                     }
                     if (type === "person") {
                         if (messageDetails?.senderId === anotherUserId) {

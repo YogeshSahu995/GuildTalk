@@ -9,7 +9,7 @@ export function ChatingScreen() {
     const { anotherUserId } = useParams()
     useEffect(() => {
         const controller = new AbortController()
-        Promise.resolve(getUserDetailsById({anotherUserId, signal}))
+        Promise.resolve(getUserDetailsById({anotherUserId, signal: controller.signal}))
         .then(res => setUsername(res?.data?.data?.username))
 
         return () => controller.abort()
